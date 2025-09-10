@@ -62,8 +62,13 @@ VALUES (<VALUE1>, <VALUE2>, <VALUEX>...)
 ![alt text](image.png)
 
 **UPDATE:**
-```INSERT QUERY
+```UPDATE QUERY
 UPDATE <TABLE_NAME> SET <COLUMN_NAME>=<VALUE> WHERE <CONDITION>
 ```
 
-OBS: The condidion almost be every time will be a primary key.
+OBS: The condidion almost be every time will be a primary key, in modern Data Pipelines is very used too a timestamp column following the primary key.
+
+**DELETE:**
+```DELETE QUERY
+DELETE FROM <TABLE_NAME> WHERE <COLUMN_NAME> = <CONDITION>
+```
