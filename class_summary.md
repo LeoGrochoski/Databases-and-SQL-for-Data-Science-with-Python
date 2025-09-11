@@ -21,7 +21,7 @@ This week is designed to give you an understanding of how to deal with real-worl
 In this additional module, you will learn how to apply advanced queries in SQL, like Views, Stored Procedures, and ACID transactions. 
 
 
-# Week 1
+# Week 1 - Getting Starting with SQL
 ## Getting started with SQL 
 
 **- SELECT**
@@ -73,7 +73,7 @@ OBS: The condidion almost be every time will be a primary key, in modern Data Pi
 DELETE FROM <TABLE_NAME> WHERE <COLUMN_NAME> = <CONDITION>
 ```
 
-# Week 2
+# Week 2 - Introdution to Relational Database and Tables
 ## Relational Database Concepts
 
 **- CREATE TABLE**
@@ -157,6 +157,69 @@ It helps ensure that data in a column is valid, logical, and consistent with its
 | TRUNCATE TABLE        | MySQL: `TRUNCATE TABLE table_name;` <br> DB2: `TRUNCATE TABLE table_name IMMEDIATE;`                  | Deletes all rows in a table. DB2 requires the IMMEDIATE keyword to process the statement immediately and irreversibly. | MySQL: `TRUNCATE TABLE employee;` <br> DB2: `TRUNCATE TABLE employee IMMEDIATE;` |
 | DROP TABLE            | `DROP TABLE table_name;`                                                                              | Deletes a table and all its data from the database.                                                     | `DROP TABLE employee;`                                                  |
 
-# Week 3
+# Week 3 - Intermediate SQL
+## Retriving Rows
+
+### Using String Patterns
+
+```
+SELECT <COLUMN_NAME> FROM <TABLE_NAME> WHERE <COLUMN_NAME> LIKE '%R'
+```
+
+## Using Range Patter
+
+```
+SELECT <COLUMN_NAME>, <COLUMN_NAME2> FROM <TABLE_NAME> WHERE <COLUMN_NAME> >= X AND <COLUMN_NAME> <= Y;
+```
+
+for example:
+
+```
+SELECT title, pages FROM Book WHERE pages >= 290 AND pages <= 300;
+```
+
+better option (easier to read and quick to retrieve the data):
+
+```
+SELECT title, pages FROM Book WHERE pages between 290 AND 300
+```
+
+### Using a Set of Values7
+
+```
+SELECT firstName, secondName, country Author WHERE country "AU" OR country = "BR";
+```
+
+better option (restring only the countrys for AU and BR)
+
+```
+SELECT firstName, secondName, country Author WHERE country IN ("AU","BR");
+```
+
+## Sorting Result Sets
+
+We can use the ORDER BY clause to sort the data like:
+
+```
+SELECT * FROM <TABLE_NAME> ORDER BY title 
+```
+That clause will sort the data alphabetical order, but we can sort in ascendent form or descendent usind ASC or DESC in the final of the query like:
+
+
+```
+SELECT * FROM <TABLE_NAME> ORDER BY title ASC/DESC
+```
+
+We can sort number columns too, bit crescent or descrescent number, or the initial of the number. 
+
+## Like, Order By, Group By - Cheat Sheet
+
+| Command | Syntax (MySQL/DB2) | Description | Example (MySQL/DB2) |
+|---------|--------------------|-------------|----------------------|
+| **LIKE** | `SELECT column1, column2, ... FROM table_name WHERE columnN LIKE pattern;` | LIKE operator is used in a WHERE clause to search for a specified pattern in a column. Two wildcards often used are percent sign (%) and underscore (_). | `SELECT f_name, l_name FROM employees WHERE address LIKE '%Elgin,IL%';`<br>*Outputs all entries with "Elgin,IL" in the Address.* |
+| **BETWEEN** | `SELECT column_name(s) FROM table_name WHERE column_name BETWEEN value1 AND value2;` | The BETWEEN operator selects values within a given range. The values can be numbers, text, or dates. The operator is inclusive. | `SELECT * FROM employees WHERE salary BETWEEN 40000 AND 80000;`<br>*Generates all records of employees with salaries between 40000 and 80000.* |
+| **ORDER BY** | `SELECT column1, column2, ... FROM table_name ORDER BY column1, column2, ... ASC\|DESC;` | ORDER BY keyword is used to sort the result-set in ascending or descending order. The default is ascending. | `SELECT f_name, l_name, dep_id FROM employees ORDER BY dep_id DESC, l_name;`<br>*Displays data sorted by dep_id DESC, then by l_name.* |
+| **GROUP BY** | `SELECT column_name(s) FROM table_name GROUP BY column_name(s)` | GROUP BY clause is used to arrange data with identical values into groups. | `SELECT dep_id, COUNT(*) FROM employees GROUP BY dep_id;`<br>*Returns department IDs and the number of employees in them.* |
+| **HAVING** | `SELECT column_name(s) FROM table_name GROUP BY column_name(s) HAVING condition` | HAVING clause is used with GROUP BY to filter data according to a condition before grouping. | `SELECT DEP_ID, COUNT(*) AS "NUM_EMPLOYEES", AVG(SALARY) AS "AVG_SALARY" FROM EMPLOYEES GROUP BY DEP_ID HAVING count(*) < 4 ORDER BY AVG_SALARY;` |
 
 
