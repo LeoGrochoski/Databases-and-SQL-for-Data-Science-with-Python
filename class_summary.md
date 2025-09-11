@@ -223,3 +223,59 @@ We can sort number columns too, bit crescent or descrescent number, or the initi
 | **HAVING** | `SELECT column_name(s) FROM table_name GROUP BY column_name(s) HAVING condition` | HAVING clause is used with GROUP BY to filter data according to a condition before grouping. | `SELECT DEP_ID, COUNT(*) AS "NUM_EMPLOYEES", AVG(SALARY) AS "AVG_SALARY" FROM EMPLOYEES GROUP BY DEP_ID HAVING count(*) < 4 ORDER BY AVG_SALARY;` |
 
 
+## Data and Time Functions
+
+**DATE:** YYYYMMDD 
+(Y: Year, M: Month, D: Day)
+
+**TIME:** HHMMSS
+(H: Hour, M: Minutes, S: Seconds)
+
+**TIMESTAMP:** YYYYXXDDHHMMSSZZZZZZ 
+(Y: Year, X: Month, D: Day, H: Hour, M: Minutes, S: Seconds and Z: microseconds)
+
+**DATE/TIME FUNCTIONS:** 
+
+- YEAR(),
+- MONTH(),
+- DAY(),
+- DAYOFMONTH(),
+- DAYSOFWEEK(),
+- DAYOFYEAR(),
+- WEEK(),
+- HOUR(),
+- MINUTE(),
+- SECOND()
+
+## Joins
+
+| JOIN Type | Basic Syntax | Description | When to Use |
+|-----------|--------------|-------------|-------------|
+| **INNER JOIN** | `SELECT columns FROM table1 INNER JOIN table2 ON table1.column = table2.column;` | Returns records that have matching values in both tables. | When you need only the records that exist in both tables. |
+| **LEFT JOIN** | `SELECT columns FROM table1 LEFT JOIN table2 ON table1.column = table2.column;` | Returns all records from the left table, and matched records from the right table. | When you need all records from the main table, plus any matches from the related table. |
+| **RIGHT JOIN** | `SELECT columns FROM table1 RIGHT JOIN table2 ON table1.column = table2.column;` | Returns all records from the right table, and matched records from the left table. | When you need all records from the secondary table, plus any matches from the main table. |
+| **FULL OUTER JOIN** | `SELECT columns FROM table1 FULL OUTER JOIN table2 ON table1.column = table2.column;` | Returns all records when there is a match in either left or right table. | When you need all records from both tables, combining them where matches exist. |
+| **CROSS JOIN** | `SELECT columns FROM table1 CROSS JOIN table2;` | Returns the Cartesian product of both tables (all possible combinations). | When you need to combine every row from one table with every row from another table. |
+| **SELF JOIN** | `SELECT a.columns, b.columns FROM table a JOIN table b ON a.column = b.column;` | Joins a table to itself to compare rows within the same table. | When you need to compare values in different rows of the same table. |
+
+## Built-in Functions - Cheat Sheet
+
+| Command | Syntax (MySQL/DB2) | Description | Example (MySQL/DB2) |
+|---------|-------------------|-------------|---------------------|
+| **COUNT** | `SELECT COUNT(column_name) FROM table_name WHERE condition;` | Returns the number of rows that match a specified criterion. | `SELECT COUNT(dep_id) FROM employees;` |
+| **AVG** | `SELECT AVG(column_name) FROM table_name WHERE condition;` | Returns the average value of a numeric column. | `SELECT AVG(salary) FROM employees;` |
+| **SUM** | `SELECT SUM(column_name) FROM table_name WHERE condition;` | Returns the total sum of a numeric column. | `SELECT SUM(salary) FROM employees;` |
+| **MIN** | `SELECT MIN(column_name) FROM table_name WHERE condition;` | Returns the smallest value of the selected column. | `SELECT MIN(salary) FROM employees;` |
+| **MAX** | `SELECT MAX(column_name) FROM table_name WHERE condition;` | Returns the largest value of the selected column. | `SELECT MAX(salary) FROM employees;` |
+| **ROUND** | `SELECT ROUND(number, decimals) AS RoundValue;` | Rounds a number to a specified number of decimal places. | `SELECT ROUND(salary) FROM employees;` |
+| **LENGTH** | `SELECT LENGTH(column_name) FROM table;` | Returns the length of a string (in bytes). | `SELECT LENGTH(f_name) FROM employees;` |
+| **UCASE** | `SELECT UCASE(column_name) FROM table;` | Displays the column values in uppercase. | `SELECT UCASE(f_name) FROM employees;` |
+| **LCASE** | `SELECT LCASE(column_name) FROM table;` | Displays the column values in lowercase. | `SELECT LCASE(f_name) FROM employees;` |
+| **DISTINCT** | `SELECT DISTINCT column_name FROM table;` | Displays data without duplicates. | `SELECT DISTINCT UCASE(f_name) FROM employees;` |
+| **DAY** | `SELECT DAY(column_name) FROM table;` | Returns the day of the month for a given date. | `SELECT DAY(b_date) FROM employees WHERE emp_id = 'E1002';` |
+| **CURRENT_DATE** | `SELECT CURRENT_DATE;` | Displays the current date. | `SELECT CURRENT_DATE;` |
+| **DATEDIFF** | `SELECT DATEDIFF(date1, date2);` | Calculates the difference between two dates (in days). | `SELECT DATEDIFF(CURRENT_DATE, date_column) FROM table;` |
+| **FROM_DAYS** | `SELECT FROM_DAYS(number_of_days);` | Converts a number of days to YYYY-MM-DD format. | `SELECT FROM_DAYS(DATEDIFF(CURRENT_DATE, date_column)) FROM table;` |
+| **DATE_ADD** | `SELECT DATE_ADD(date, INTERVAL n type);` | Calculates the date after adding a time interval. | `SELECT DATE_ADD(date, INTERVAL 3 DAY);` |
+| **DATE_SUB** | `SELECT DATE_SUB(date, INTERVAL n type);` | Calculates the date before subtracting a time interval. | `SELECT DATE_SUB(date, INTERVAL 3 DAY);` |
+| **Subquery** | `SELECT column_name FROM table1 WHERE column_name OPERATOR (SELECT column_name FROM table2 [WHERE]);` | A query within another SQL query embedded in the WHERE clause. | `SELECT emp_id, f_name, l_name, salary FROM employees WHERE salary < (SELECT AVG(salary) FROM employees);` |
